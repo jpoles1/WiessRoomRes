@@ -1,0 +1,19 @@
+{
+  "name": "wiessroomres",
+  "version": "1.0.0",
+  "description": "A system for making Wiess room reservations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpoles1/WiessRoomRes.git"
+  },
+  "author": "Jordan Poles",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jpoles1/WiessRoomRes/issues"
+  },
+  "homepage": "https://github.com/jpoles1/WiessRoomRes#readme"
+}
