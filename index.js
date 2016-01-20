@@ -17,7 +17,7 @@ app.get("/", function(req, res){
   //res.send("Hello!")
   res.render("home.hbs")
 })
-port = 8000;
+port = process.env.PORT || 8000;
 app.listen(port, function(){
   console.log("Web server started on port:",port)
   console.log("http://127.0.0.1:"+port)
