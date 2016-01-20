@@ -1,0 +1,22 @@
+{
+  "name": "wiessroomres",
+  "description": "A system for making Wiess room reservations",
+  "main": "index.js",
+  "authors": [
+    "Jordan Poles"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/jpoles1/WiessRoomRes",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "fullcalendar": "~2.6.0"
+  }
+}
