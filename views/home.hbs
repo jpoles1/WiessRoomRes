@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Wiess Room Reservation System</title>
+    <link rel="stylesheet" href="/res/css/form.css"></link>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.min.css"></link>
     <script src="res/js/jquery-2.2.0.min.js"></script>
     <script src="http://momentjs.com/downloads/moment.js"></script>
@@ -15,14 +16,18 @@
       padding: 25px;
     }
     #leftpane{
-      width: 61%
+      width: 61%;
+      height: 120%;
     }
     #rightpane{
       width: 33%;
+      position: fixed;
+      right:0px;
+      height: 60%;
+      top: 20%;
     }
     .taskpane{
       border: 1px solid black;
-      height: 100%;
       overflow: hidden;
       float: left;
       margin: 25px 1% 50px 1%;
@@ -34,14 +39,29 @@
       background-color: #ffeaad !important;
     }
   </style>
-  <h1>Wiess Room Reservation System</h1>
   <div id="content">
     <div id="leftpane" class="taskpane">
+      <h1>Wiess Room Reservation Calendar</h1>
       <div id="cal"></div>
     </div>
     <div id="rightpane" class="taskpane">
-      <h2>Reservation Form Goes Here</h2>
-
+      <h2>Reservation Form</h2>
+      <form>
+        <div class="form-style-2">
+          <div class="form-style-2-heading"></div>
+          <form action="" method="post">
+          <label for="field1"><span>Name: <span class="required">*</span></span><input type="text" class="input-field" name="field1" value="" /></label>
+          <label for="field2"><span>Email: <span class="required">*</span></span><input type="text" class="input-field" name="field2" value="" /></label>
+          <label><span>Telephone: </span><input type="text" class="tel-number-field" name="tel_no_1" value="" maxlength="4" />-<input type="text" class="tel-number-field" name="tel_no_2" value="" maxlength="4"  />-<input type="text" class="tel-number-field" name="tel_no_3" value="" maxlength="10"  /></label>
+          <label for="field4"><span>Room: </span><select name="field4" class="select-field">
+            <option value="Movie Room">Movie Room</option>
+            <option value="Large Classroom">Large Classroom</option>
+            <option value="Small Classroom">Small Classroom</option>
+          </select></label>
+          <label><span>&nbsp;</span><input type="submit" value="Submit" /></label>
+          </form>
+        </div>
+      </form>
     </div>
   </div>
 </body>
