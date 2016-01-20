@@ -1,5 +1,38 @@
-<script src=""></script>
-<h1>Wiess Room Reservation System</h1>
-<div id="content">
-  <div left
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Wiess Room Reservation System</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.min.css"></link>
+    <script src="res/js/jquery-2.2.0.min.js"></script>
+    <script src="http://momentjs.com/downloads/moment.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.min.js"></script>
+    <script src="res/js/main.js"></script>
+</head>
+<body style="text-align: center;">
+  <style>
+    body{
+      padding: 25px;
+    }
+    #leftpane{
+      width: 61%
+    }
+    #rightpane{
+      width: 33%;
+    }
+    .taskpane{
+      border: 1px solid black;
+      height: 600px;
+      float: left;
+      margin: 0 1% 0 1%;
+    }
+  </style>
+  <h1>Wiess Room Reservation System</h1>
+  <div id="content">
+    <div id="leftpane" class="taskpane">
+      <div id="cal"></div>
+    </div>
+    <div id="rightpane" class="taskpane"></div>
+  </div>
+</body>
+</html>
