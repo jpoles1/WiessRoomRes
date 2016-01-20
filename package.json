@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/jpoles1/WiessRoomRes/issues"
   },
-  "homepage": "https://github.com/jpoles1/WiessRoomRes#readme"
+  "homepage": "https://github.com/jpoles1/WiessRoomRes#readme",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
 }
