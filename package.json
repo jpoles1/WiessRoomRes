@@ -23,7 +23,9 @@
     "express-handlebars": "^2.0.1",
     "google-auth-library": "^0.9.7",
     "googleapis": "^2.1.7",
-    "hbs": "^4.0.0"
+    "hbs": "^4.0.0",
+    "kerberos": "0.0.18",
+    "mongoose": "^4.3.6"
   },
   "devDependencies": {}
 }

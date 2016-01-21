@@ -49,14 +49,22 @@
         <div class="form-style-2">
           <div class="form-style-2-heading"></div>
           <form action="/createRes" method="post">
-            <label for="field1"><span>Name: <span class="required">*</span></span><input type="text" class="input-field" name="field1" value="" /></label>
-            <label for="field2"><span>Email: <span class="required">*</span></span><input type="text" class="input-field" name="field2" value="" /></label>
-            <label><span>Telephone: </span><input type="text" class="tel-number-field" name="tel_no_1" value="" maxlength="4" />-<input type="text" class="tel-number-field" name="tel_no_2" value="" maxlength="4"  />-<input type="text" class="tel-number-field" name="tel_no_3" value="" maxlength="10"  /></label>
-            <label for="field4"><span>Room: </span><select name="field4" class="select-field">
+            <label for="name"><span>Name: <span class="required">*</span></span><input type="text" class="input-field" name="name" value="" /></label>
+            <label for="email"><span>Email: <span class="required">*</span></span><input type="text" class="input-field" name="email" value="" /></label>
+            <label>
+              <span>Telephone: </span>
+              <input type="text" class="tel-number-field" name="tel_no_1" value="" maxlength="4" />
+              -
+              <input type="text" class="tel-number-field" name="tel_no_2" value="" maxlength="4"  />
+              -
+              <input type="text" class="tel-number-field" name="tel_no_3" value="" maxlength="10"  />
+            </label>
+            <label for="roomName"><span>Room: </span><select name="roomName" class="select-field">
               <option value="Movie Room">Movie Room</option>
               <option value="Large Classroom">Large Classroom</option>
               <option value="Small Classroom">Small Classroom</option>
             </select></label>
+            <em>Captcha Goes Here</em>
             <label><span>&nbsp;</span><input type="submit" value="Submit" /></label>
           </form>
         </div>
