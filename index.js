@@ -1,9 +1,9 @@
 //Setup Express
-var express = require("express")
+var express = require("express");
 var exphbs  = require('express-handlebars');
 var bodyParser = require('body-parser')
 var app = express()
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', exphbs({defaultLayout: 'main.hbs'}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/res', express.static('res'));
 app.set('view engine', 'handlebars');
@@ -15,7 +15,7 @@ mongoose.connect(process.env.MONGOLAB_URI);
 var Reservation = mongoose.model("Reservation", {
   reserver: String,
   email: String,
-  phone: Number,
+  phone: String,
   org: String,
   room: String,
   start: Date,
@@ -27,11 +27,6 @@ var googleAuth = require('google-auth-library');
 var auth = new googleAuth();
 var oauth2Client = new auth.OAuth2(process.env.CLIENTID, process.env.SECRETID, "https://www.googleapis.com/auth/calendar");
 */
-
-app.get("/", function(req, res){
-  //res.send("Hello!")
-  res.render("home.hbs")
-})
 app.post("/createRes", function(req, res){
   console.log(req.body)
   var newres = new Reservation({ reserver: req.body.name, email: req.body.email,  room: req.body.roomName});
@@ -41,6 +36,10 @@ app.post("/createRes", function(req, res){
   });
   res.send("Form Sent.")
 });
+app.get("/", function(req, res){
+  //res.send("Hello!")
+  res.render("home.hbs", {layout: undefined})
+})
 port = process.env.PORT || 8000;
 app.listen(port, function(){
   console.log("Web server started on port:",port)
