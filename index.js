@@ -1,17 +1,23 @@
-//Setup Express
+//Setup Express (our web server) and other express reqs
 var express = require("express");
 var exphbs  = require('express-handlebars');
 var bodyParser = require('body-parser')
+//Create express server
 var app = express()
+//Sets the template engine to be handlebars
 app.engine('handlebars', exphbs({defaultLayout: 'main.hbs'}));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/res', express.static('res'));
 app.set('view engine', 'handlebars');
-//Load .env file config
+//Sets up the parser which can parse information out of HTTP POST requests
+app.use(bodyParser.urlencoded({ extended: true }));
+//Serves all files in the res folder as static resources
+app.use('/res', express.static('res'));
+//Load .env file config (contains DB info)
 require('dotenv').config();
-//Load mongodb
+//Load Mongoose (mongodb driver)
 var mongoose = require('mongoose');
+//Connect to server using URI from .env file
 mongoose.connect(process.env.MONGOLAB_URI);
+//Setup structure for Reservation
 var Reservation = mongoose.model("Reservation", {
   reserver: String,
   email: String,
@@ -21,26 +27,12 @@ var Reservation = mongoose.model("Reservation", {
   start: Date,
   end: Date
 })
-//Load GCal API Libs
-/*var google = require('googleapis');
-var googleAuth = require('google-auth-library');
-var auth = new googleAuth();
-var oauth2Client = new auth.OAuth2(process.env.CLIENTID, process.env.SECRETID, "https://www.googleapis.com/auth/calendar");
-*/
-app.post("/createRes", function(req, res){
-  console.log(req.body)
-  var newres = new Reservation({ reserver: req.body.name, email: req.body.email,  room: req.body.roomName});
-  newres.save(function (err) {
-    if (err) console.log(err)
-    console.log('Adding a new entry right meow');
-  });
-  res.send("Form Sent.")
-});
-app.get("/", function(req, res){
-  //res.send("Hello!")
-  res.render("home.hbs", {layout: undefined})
-})
+//Import routing from other files (under the routing foluder)
+require("./routing/reserve")(app, Reservation)
+require("./routing/approve")(app, Reservation)
+//Set the port for the server
 port = process.env.PORT || 8000;
+//Tell server to start listening on above port
 app.listen(port, function(){
   console.log("Web server started on port:",port)
   console.log("http://127.0.0.1:"+port)
