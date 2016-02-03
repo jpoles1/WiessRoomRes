@@ -3,28 +3,26 @@
 <head>
     <meta charset="utf-8">
     <title>Wiess Room Reservation System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="/res/css/form.css"></link>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.min.css"></link>
     <script src="res/js/jquery-2.2.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="http://momentjs.com/downloads/moment.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/gcal.js"></script>
     <script src="res/js/main.js"></script>
 </head>
 <body style="text-align: center;">
   <style>
-    body{
-      padding: 25px;
-    }
     #leftpane{
-      width: 61%;
       height: 120%;
     }
     #rightpane{
-      width: 33%;
       position: fixed;
       right:0px;
-      height: 60%;
-      top: 20%;
+      height: 80%;
+      top: 10%;
     }
     .taskpane{
       border: 1px solid black;
@@ -38,13 +36,14 @@
     .fc-today{
       background-color: #ffeaad !important;
     }
+
   </style>
-  <div id="content">
-    <div id="leftpane" class="taskpane">
+  <div id="content" class="container-fluid">
+    <div id="leftpane" class="taskpane col-md-7">
       <h1>Wiess Room Reservation Calendar</h1>
       <div id="cal"></div>
     </div>
-    <div id="rightpane" class="taskpane">
+    <div id="rightpane" class="taskpane col-md-4">
       <h2>Reservation Form</h2>
         <div class="form-style-2">
           <div class="form-style-2-heading"></div>
@@ -64,7 +63,9 @@
               <option value="Large Classroom">Large Classroom</option>
               <option value="Small Classroom">Small Classroom</option>
             </select></label>
-            <em>Captcha Goes Here</em>
+            <label for="eventName"><span>Event Name: <span class="required">*</span></span><input type="text" class="input-field" id="eventName" name="eventName" value="Add event using calendar" readonly/></label>
+            <label for="startTime"><span>Start Time: <span class="required">*</span></span><input type="text" class="input-field" id="startTime" name="startTime" value="Add event using calendar" readonly/></label>
+            <label for="endTime"><span>End Time: <span class="required">*</span></span><input type="text" class="input-field" id="endTime" name="endTime" value="Add event using calendar" readonly/></label>
             <label><span>&nbsp;</span><input type="submit" value="Submit" /></label>
           </form>
         </div>
