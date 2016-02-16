@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Wiess Room Reservation System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="/res/css/form.css"></link>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.min.css"></link>
+    <script src="res/js/jquery-2.2.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="http://momentjs.com/downloads/moment.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/gcal.js"></script>
+    <script src="res/js/main.js"></script>
+</head>
+<body style="text-align: center;">
+  <style>
+    #leftpane{
+      height: 90%;
+    }
+    #rightpane{
+      position: fixed;
+      right:0px;
+      height: 80%;
+      top: 8%;
+    }
+    .taskpane{
+      border: 1px solid black;
+      overflow: hidden;
+      float: left;
+      margin: 25px 1% 50px 1%;
+    }
+    .fc-toolbar{
+      padding: 15px;
+    }
+    .fc-today{
+      background-color: #ffeaad !important;
+    }
+
+  </style>
+  <div id="content" class="container-fluid">
+    <div id="leftpane" class="taskpane col-md-7">
+      <h1>Wiess Room Reservation Calendar</h1>
+      <div id="cal"></div>
+    </div>
+    <div id="rightpane" class="taskpane col-md-4">
+      <h2>Pending Reservations</h2>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#noconflict" aria-controls="noconflict" role="tab" data-toggle="tab">Ready to Adds</a></li>
+          <li role="presentation"><a href="#conflict" aria-controls="conflict" role="tab" data-toggle="tab">Conflicted</a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="noconflict"><input type="button" value="Add Non-Conflict Events"><br>Add me</div>
+          <div role="tabpanel" class="tab-pane" id="conflict">Conflicts</div>
+        </div>
+    </div>
+  </div>
+  <script>
+  $(function(){
+    $("#tablist a").tab("show")
+  })
+  </script>
+</body>
+</html>

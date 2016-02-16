@@ -7,7 +7,7 @@ module.exports = function(app, Reservation){
       if (err) console.log(err)
       console.log('Adding a new entry right meow');
     });
-    res.send("Form Sent.")
+    res.send("Reservation submitted. Please check your email inbox for the confirmation link to finalize your reservation.")
   });
   app.get("/", function(req, res){
     //res.send("Hello!")
