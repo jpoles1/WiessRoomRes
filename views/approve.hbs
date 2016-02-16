@@ -52,8 +52,20 @@
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="noconflict"><input type="button" value="Add Non-Conflict Events"><br>Add me</div>
-          <div role="tabpanel" class="tab-pane" id="conflict">Conflicts</div>
+          <div role="tabpanel" class="tab-pane active" id="noconflict">
+            <input type="button" value="Add Non-Conflict Events">
+            <br>
+            Add me
+          </div>
+          <div role="tabpanel" class="tab-pane" id="conflict">
+            {{#each conflict_list}}
+              <div class="conflict-group">
+                {{#each this}}
+                  <h2>{{eventName}}</h2>
+                {{/each}}
+              </div>
+            {{/each}}
+          </div>
         </div>
     </div>
   </div>

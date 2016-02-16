@@ -13,7 +13,7 @@ module.exports = function(app, Reservation){
         conflict_group = []
         if(conflicted.indexOf(res_index)==-1){
           reslist.slice(res_index+1).forEach(function(elem, check_index){
-            if((res["start"]-elem["end"]<0) | (elem["start"]-res["end"]<0)){
+            if((res["start"]-elem["end"]<=0) && (elem["start"]-res["end"]<=0)){
               if(conflict_group.length==0){
                 conflicted.push(res_index)
                 conflict_group.push(res)
@@ -28,7 +28,7 @@ module.exports = function(app, Reservation){
         }
       });
       console.log(conflict_list)
+      res.render("approve.hbs", {layout: undefined, "conflict_list": conflict_list})
     })
-    res.render("approve.hbs", {layout: undefined})
   })
 }
