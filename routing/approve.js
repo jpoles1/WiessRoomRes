@@ -8,11 +8,13 @@ module.exports = function(app, Reservation){
   app.get("/approve", function(req, res){
     Reservation.find({}, function(err, reslist){
       conflicted = [];
+      no_conflict = [];
       conflict_list = []
       reslist.forEach(function(res, res_index){
         conflict_group = [res]
         if(conflicted.indexOf(res_index)==-1){
           reslist.slice(res_index+1).forEach(function(elem, check_index){
+            check_index+=1;
             function isConflict(element, index, array) {
               return (element["start"]-elem["end"]<=0) && (elem["start"]-element["end"]<=0)
             }
@@ -24,12 +26,16 @@ module.exports = function(app, Reservation){
               }
             }
           })
+          console.log(conflicted)
           if(conflict_group.length>1){
             conflict_list.push(conflict_group);
           }
+          else{
+            no_conflict.push(res);
+          }
         }
       });
-      res.render("approve.hbs", {layout: undefined, "conflict_list": conflict_list})
+      res.render("approve.hbs", {layout: undefined, "no_conflict": no_conflict, "conflict_list": conflict_list})
     })
   })
 }

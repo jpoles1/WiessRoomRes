@@ -55,7 +55,12 @@
           <div role="tabpanel" class="tab-pane" id="noconflict">
             <input type="button" value="Add Non-Conflict Events">
             <br>
-            Add me
+            {{#each no_conflict}}
+              <h2>{{eventName}}</h2>
+              <b>Start:</b>{{start}}
+              <br>
+              <b>End:</b>{{end}}
+            {{/each}}
           </div>
           <div role="tabpanel" class="tab-pane active" id="conflict">
             {{#each conflict_list}}
