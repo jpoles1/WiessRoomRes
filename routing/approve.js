@@ -10,24 +10,25 @@ module.exports = function(app, Reservation){
       conflicted = [];
       conflict_list = []
       reslist.forEach(function(res, res_index){
-        conflict_group = []
+        conflict_group = [res]
         if(conflicted.indexOf(res_index)==-1){
           reslist.slice(res_index+1).forEach(function(elem, check_index){
-            if((res["start"]-elem["end"]<=0) && (elem["start"]-res["end"]<=0)){
-              if(conflict_group.length==0){
-                conflicted.push(res_index)
-                conflict_group.push(res)
-              }
+            function isConflict(element, index, array) {
+              return (element["start"]-elem["end"]<=0) && (elem["start"]-element["end"]<=0)
+            }
+            if(conflict_group.some(isConflict) && conflicted.indexOf(check_index)==-1){
               conflicted.push(check_index)
               conflict_group.push(elem)
+              if(conflict_group.length==2){
+                conflicted.push(res_index)
+              }
             }
           })
-          if(conflict_group.length>0){
+          if(conflict_group.length>1){
             conflict_list.push(conflict_group);
           }
         }
       });
-      console.log(conflict_list)
       res.render("approve.hbs", {layout: undefined, "conflict_list": conflict_list})
     })
   })

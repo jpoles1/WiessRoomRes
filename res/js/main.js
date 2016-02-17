@@ -8,6 +8,7 @@ var updateTime = function(event){
 $(function(){
   var added = 0;
   $('#cal').fullCalendar({
+    timezone: 'America/Chicago',
     header: {
 			left: 'prev,next today',
 			center: 'title',

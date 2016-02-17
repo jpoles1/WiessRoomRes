@@ -26,7 +26,7 @@
     }
     .taskpane{
       border: 1px solid black;
-      overflow: hidden;
+      overflow: scroll;
       float: left;
       margin: 25px 1% 50px 1%;
     }
@@ -47,23 +47,28 @@
       <h2>Pending Reservations</h2>
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active"><a href="#noconflict" aria-controls="noconflict" role="tab" data-toggle="tab">Ready to Adds</a></li>
-          <li role="presentation"><a href="#conflict" aria-controls="conflict" role="tab" data-toggle="tab">Conflicted</a></li>
+          <li role="presentation"><a href="#noconflict" aria-controls="noconflict" role="tab" data-toggle="tab">Ready to Adds</a></li>
+          <li role="presentation" class="active"><a href="#conflict" aria-controls="conflict" role="tab" data-toggle="tab">Conflicted</a></li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="noconflict">
+          <div role="tabpanel" class="tab-pane" id="noconflict">
             <input type="button" value="Add Non-Conflict Events">
             <br>
             Add me
           </div>
-          <div role="tabpanel" class="tab-pane" id="conflict">
+          <div role="tabpanel" class="tab-pane active" id="conflict">
             {{#each conflict_list}}
               <div class="conflict-group">
                 {{#each this}}
                   <h2>{{eventName}}</h2>
+                  <b>Start:</b>{{start}}
+                  <br>
+                  <b>End:</b>{{end}}
+
                 {{/each}}
               </div>
+              <hr>
             {{/each}}
           </div>
         </div>
