@@ -5,7 +5,7 @@
       // Developer Console, https://console.developers.google.com
       var CLIENT_ID = '840852597338-ptufhhjimn4l09pt1c69828uimuu3jj8.apps.googleusercontent.com';
 
-      var SCOPES = ["https://www.googleapis.com/auth/calendar"];
+      var SCOPES = ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/calendar"];
 
       /**
        * Check if current user has authorized this application.
@@ -25,6 +25,7 @@
        * @param {Object} authResult Authorization result.
        */
       function handleAuthResult(authResult) {
+        console.log(authResult)
         var authorizeDiv = document.getElementById('authorize-div');
         if (authResult && !authResult.error) {
           // Hide auth UI, then load client library.
@@ -103,7 +104,7 @@
         var textContent = document.createTextNode(message + '\n');
         pre.appendChild(textContent);
       }
-
+      handleAuthClick()
     </script>
     <script src="https://apis.google.com/js/client.js?onload=checkAuth">
     </script>

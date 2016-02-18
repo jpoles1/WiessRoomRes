@@ -9,17 +9,26 @@ module.exports = function(app, Reservation){
     res.render("gcal.hbs");
   });
   app.post("/rejectEvent", function(req, res){
-    var event_id = req.body.id;
-    console.log(event_id)
-    Reservation.findOne({"_id": event_id}, function (err, doc){
-      if(err) console.log(err)
-      doc.rejected = true;
-      doc.save();
-      res.send("Done")
-    });
+    var event_id = req.body.eventid;
+    var email = req.body.email;
+    if(event_id && email){
+      Reservation.update({"_id": event_id}, { $push: { rejected: email} }, function (err){
+        if(err){
+          res.send(err)
+        }
+        else{
+          res.send("success")
+        }
+      });
+    }
+    else{
+      res.send("FAILURE")
+    }
   });
-  app.get("/approve", function(req, res){
-    Reservation.find({rejected: false}, function(err, reslist){
+  app.post("/getEvents", function(req, res){
+    var email = req.body.email;
+    console.log("TEST", email)
+    Reservation.find({"rejected": { $ne: email } }, function(err, reslist){
       conflicted = [];
       no_conflict = [];
       conflict_list = []
@@ -50,13 +59,15 @@ module.exports = function(app, Reservation){
         }
         eventlist[res["_id"]] = res;
       });
-      res.render("approve.hbs", {
-        layout: undefined,
-        "eventjson": JSON.stringify(eventlist),
+      res.json(JSON.stringify({
+        "eventjson": eventlist,
         "no_conflict": no_conflict,
         "conflict_list": conflict_list,
         "conflicted": JSON.stringify(conflicted)
-      })
+      }))
     })
+  })
+  app.get("/approve", function(req, res){
+    res.render("approve.hbs", {layout: undefined})
   })
 }

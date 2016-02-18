@@ -4,13 +4,93 @@
     <meta charset="utf-8">
     <title>Wiess Room Reservation System</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" href="/res/css/form.css"></link>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.min.css"></link>
     <script src="res/js/jquery-2.2.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="http://momentjs.com/downloads/moment.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/gcal.js"></script>
+    <script>
+      var email = "";
+      var CLIENT_ID = '840852597338-dr88h7madm649njfj1hv1a3vp2l24lth.apps.googleusercontent.com';
+      var SCOPES = ["https://www.googleapis.com/auth/plus.profile.emails.read", "https://www.googleapis.com/auth/calendar"];
+      function checkAuth() {
+        gapi.auth.authorize(
+          {
+            'client_id': CLIENT_ID,
+            'scope': SCOPES.join(' '),
+            'immediate': true
+          }, handleAuthResult);
+      }
+      /**
+       * Handle response from authorization server.
+       *
+       * @param {Object} authResult Authorization result.
+       */
+      function handleAuthResult(authResult) {
+        var authorizeDiv = document.getElementById('authorize-div');
+        if (authResult && !authResult.error) {
+          // Hide auth UI, then load client library.
+          $("#authorize-div").hide();
+          $("#content").show();
+          getEmail();
+        } else {
+          // Show auth UI, allowing the user to initiate authorization by
+          // clicking authorize button.
+          $("#authorize-div").show();
+          $("#content").hide();
+        }
+      }
+      function getEmail(){
+        gapi.client.load('plus', 'v1', function() {
+          console.log(gapi.client);
+          gapi.client.plus.people.get({userId: 'me'}).execute(function(resp) {
+            // Shows profile information
+            console.log(resp);
+            email = resp["emails"][0]["value"];
+            getEvents(email);
+          })
+        });
+      }
+      function handleAuthClick(event) {
+        gapi.auth.authorize(
+          {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
+          handleAuthResult);
+        return false;
+      }
+    </script>
+    <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
+    <script id="event-template" type="text/x-handlebars-template">
+      \{{#each conflict_list}}
+        <div class="conflict-group">
+          \{{#each this}}
+            <div class="event-box" id="\{{_id}}">
+              <div class="event-butt">
+                <br>
+                <button type="button" class="btn btn-success">
+                  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                </button>
+                <br>
+                <button type="button" class="btn btn-danger">
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+              </div>
+              <h3>\{{eventName}}</h3>
+              Reserved by <u><a href="mailto:\{{email}}" target="_blank">\{{reserver}}</a></u> for
+              <br>
+              <i>\{{why}}</i>
+              <br>
+              <b>Start:</b>\{{start}}
+              <br>
+              <b>End:</b>\{{end}}
+            </div>
+            <br>
+          \{{/each}}
+        </div>
+        <hr>
+      \{{/each}}
+    </script>
     <script src="res/js/approval.js"></script>
 </head>
 <body style="text-align: center;">
@@ -47,6 +127,15 @@
       right: 1px;
     }
   </style>
+  <div id="authorize-div" style="display: none; margin-top: 150px;">
+    <span>Authorize access to Google Calendar API</span>
+    <!--Button for the user to click to initiate auth sequence -->
+    <br>
+    <br>
+    <button id="authorize-button" onclick="handleAuthClick(event)">
+      Authorize
+    </button>
+  </div>
   <div id="content" class="container-fluid">
     <div id="leftpane" class="taskpane col-md-7">
       <h1>Wiess Room Reservation Calendar</h1>
@@ -65,81 +154,13 @@
             <br>
             <input type="button" value="Add Non-Conflict Events">
             <br>
-            {{#each no_conflict}}
-              <h2>{{eventName}}</h2>
-              <b>Start:</b>{{start}}
-              <br>
-              <b>End:</b>{{end}}
-            {{/each}}
+
           </div>
           <div role="tabpanel" class="tab-pane active" id="conflict">
-            {{#each conflict_list}}
-              <div class="conflict-group">
-                {{#each this}}
-                  <div class="event-box" id="{{_id}}">
-                    <div class="event-butt">
-                      <br>
-                      <button type="button" class="btn btn-success">
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                      </button>
-                      <br>
-                      <button type="button" class="btn btn-danger">
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                      </button>
-                    </div>
-                    <h3>{{eventName}}</h3>
-                    Reserved by <u><a href="mailto:{{email}}" target="_blank">{{reserver}}</a></u> for
-                    <br>
-                    <i>{{why}}</i>
-                    <br>
-                    <b>Start:</b>{{start}}
-                    <br>
-                    <b>End:</b>{{end}}
-                  </div>
-                  <br>
-                {{/each}}
-              </div>
-              <hr>
-            {{/each}}
+
           </div>
         </div>
     </div>
   </div>
-  <script>
-  $(function(){
-    eventdata = {{{eventjson}}}
-    conflicted = {{{conflicted}}}
-    $.each(eventdata, function(ev_id){
-      ev = eventdata[ev_id]
-      eventOpts = {
-        "id": ev["_id"],
-        "title": ev["eventName"]+"\n\n"+ev ["room"],
-        "start": ev["start"],
-        "end": ev["end"]
-      }
-      if(conflicted.indexOf(ev_id)==-1){
-        eventOpts["color"] = "#008A40";
-      }
-      else{
-        //eventOpts["color"] = "#8A004A";
-        eventOpts["color"] = "#8A004A";
-      }
-      $('#cal').fullCalendar('renderEvent', eventOpts, true); // stick? = true
-    })
-    $("#tablist a").tab("show")
-    $(".btn-success").click(function(){
-      event_id = ($(this).parent().parent().attr("id"));
-      console.log(eventdata[event_id])
-    })
-    $(".btn-danger").click(function(){
-      event_id = $(this).parent().parent().attr("id");
-      $.post("/rejectEvent", {"id": event_id}, function(resp){
-        console.log(resp);
-        window.location.reload();
-      });
-    })
-
-  })
-  </script>
 </body>
 </html>
