@@ -11,7 +11,7 @@
     <script src="http://momentjs.com/downloads/moment.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/gcal.js"></script>
-    <script src="res/js/main.js"></script>
+    <script src="res/js/approval.js"></script>
 </head>
 <body style="text-align: center;">
   <style>
@@ -53,6 +53,7 @@
         <!-- Tab panes -->
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane" id="noconflict">
+            <br>
             <input type="button" value="Add Non-Conflict Events">
             <br>
             {{#each no_conflict}}
@@ -81,6 +82,26 @@
   </div>
   <script>
   $(function(){
+    eventdata = {{{eventjson}}}
+    conflicted = {{{conflicted}}}
+    $.each(eventdata, function(ev_id){
+      ev = eventdata[ev_id]
+      console.log(ev)
+      eventOpts = {
+        "id": ev["_id"],
+        "title": ev["eventName"]+"\n\n"+ev ["room"],
+        "start": ev["start"],
+        "end": ev["end"]
+      }
+      if(conflicted.indexOf(ev_id)==-1){
+        eventOpts["color"] = "#008A40";
+      }
+      else{
+        //eventOpts["color"] = "#8A004A";
+        eventOpts["color"] = "#8A004A";
+      }
+      $('#cal').fullCalendar('renderEvent', eventOpts, true); // stick? = true
+    })
     $("#tablist a").tab("show")
   })
   </script>
