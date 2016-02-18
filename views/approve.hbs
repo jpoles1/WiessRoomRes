@@ -36,7 +36,16 @@
     .fc-today{
       background-color: #ffeaad !important;
     }
-
+    .event-box{
+      padding-right: 30px;
+      position: relative;
+    }
+    .event-butt{
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      right: 1px;
+    }
   </style>
   <div id="content" class="container-fluid">
     <div id="leftpane" class="taskpane col-md-7">
@@ -67,15 +76,27 @@
             {{#each conflict_list}}
               <div class="conflict-group">
                 {{#each this}}
-                  <h2>{{eventName}}</h2>
-                  Reserved by <u><a href="mailto:{{email}}" target="_blank">{{reserver}}</a></u> for
+                  <div class="event-box">
+                    <div class="event-butt">
+                      <br>
+                      <button type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                      </button>
+                      <br>
+                      <button type="button" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                      </button>
+                    </div>
+                    <h3>{{eventName}}</h3>
+                    Reserved by <u><a href="mailto:{{email}}" target="_blank">{{reserver}}</a></u> for
+                    <br>
+                    <i>{{why}}</i>
+                    <br>
+                    <b>Start:</b>{{start}}
+                    <br>
+                    <b>End:</b>{{end}}
+                  </div>
                   <br>
-                  <i>{{why}}</i>
-                  <br>
-                  <b>Start:</b>{{start}}
-                  <br>
-                  <b>End:</b>{{end}}
-
                 {{/each}}
               </div>
               <hr>
