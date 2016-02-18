@@ -5,8 +5,21 @@ module.exports = function(app, Reservation){
   var auth = new googleAuth();
   var oauth2Client = new auth.OAuth2(process.env.CLIENTID, process.env.SECRETID, "https://www.googleapis.com/auth/calendar");
   */
+  app.get("/gcal", function(req, res){
+    res.render("gcal.hbs");
+  });
+  app.post("/rejectEvent", function(req, res){
+    var event_id = req.body.id;
+    console.log(event_id)
+    Reservation.findOne({"_id": event_id}, function (err, doc){
+      if(err) console.log(err)
+      doc.rejected = true;
+      doc.save();
+      res.send("Done")
+    });
+  });
   app.get("/approve", function(req, res){
-    Reservation.find({}, function(err, reslist){
+    Reservation.find({rejected: false}, function(err, reslist){
       conflicted = [];
       no_conflict = [];
       conflict_list = []

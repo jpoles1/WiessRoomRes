@@ -76,7 +76,7 @@
             {{#each conflict_list}}
               <div class="conflict-group">
                 {{#each this}}
-                  <div class="event-box">
+                  <div class="event-box" id="{{_id}}">
                     <div class="event-butt">
                       <br>
                       <button type="button" class="btn btn-success">
@@ -111,7 +111,6 @@
     conflicted = {{{conflicted}}}
     $.each(eventdata, function(ev_id){
       ev = eventdata[ev_id]
-      console.log(ev)
       eventOpts = {
         "id": ev["_id"],
         "title": ev["eventName"]+"\n\n"+ev ["room"],
@@ -128,6 +127,18 @@
       $('#cal').fullCalendar('renderEvent', eventOpts, true); // stick? = true
     })
     $("#tablist a").tab("show")
+    $(".btn-success").click(function(){
+      event_id = ($(this).parent().parent().attr("id"));
+      console.log(eventdata[event_id])
+    })
+    $(".btn-danger").click(function(){
+      event_id = $(this).parent().parent().attr("id");
+      $.post("/rejectEvent", {"id": event_id}, function(resp){
+        console.log(resp);
+        window.location.reload();
+      });
+    })
+
   })
   </script>
 </body>

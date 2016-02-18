@@ -25,7 +25,8 @@ var Reservation = mongoose.model("Reservation", {
   room: String,
   eventName: String,
   start: Date,
-  end: Date
+  end: Date,
+  rejected: Boolean
 })
 //Import routing from other files (under the routing foluder)
 require("./routing/reserve")(app, Reservation)
