@@ -21,7 +21,7 @@ mongoose.connect(process.env.MONGOLAB_URI);
 var Reservation = mongoose.model("Reservation", {
   reserver: String,
   email: String,
-  org: String,
+  why: String,
   room: String,
   eventName: String,
   start: Date,
