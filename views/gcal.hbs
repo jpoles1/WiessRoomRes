@@ -64,7 +64,7 @@
        * appropriate message is printed.
        */
       function listUpcomingEvents() {
-        var request = gapi.client.calendar.events.list({
+        var request = gapi.client.calendar.events({
           'calendarId': 'primary',
           'timeMin': (new Date()).toISOString(),
           'showDeleted': false,

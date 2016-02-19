@@ -1,11 +1,21 @@
+Handlebars.registerHelper('time', function(context) {
+  d = new Date(context);
+  return d.toLocaleString();
+});
 getEvents = function(email){
+  gapi.client.load('calendar', 'v3', calVerify);
   $.post("getEvents", {"email": email}, function(rawjson){
     jsondata = JSON.parse(rawjson);
     eventdata = jsondata["eventjson"]
     conflicted = jsondata["conflicted"]
-    var source = $("#event-template").text();
+    //Add Conflict Events
+    var source = $("#conflict-template").html();
     var template = Handlebars.compile(source);
     $("#conflict").html(template(jsondata));
+    //Add non-conflicted
+    var source = $("#noconflict-template").html();
+    var template = Handlebars.compile(source);
+    $("#noconflict").html(template(jsondata));
     for(ev_id in eventdata){
       ev = eventdata[ev_id]
       eventOpts = {
@@ -26,6 +36,7 @@ getEvents = function(email){
     $(".btn-success").click(function(){
       event_id = ($(this).parent().parent().attr("id"));
       console.log(eventdata[event_id])
+      gapi.client.load('calendar', 'v3', addToGCal(event_data));
     })
     $(".btn-danger").click(function(){
       var event_id = $(this).parent().parent().attr("id");

@@ -27,7 +27,6 @@ module.exports = function(app, Reservation){
   });
   app.post("/getEvents", function(req, res){
     var email = req.body.email;
-    console.log("TEST", email)
     Reservation.find({"rejected": { $ne: email } }, function(err, reslist){
       conflicted = [];
       no_conflict = [];
@@ -49,7 +48,6 @@ module.exports = function(app, Reservation){
               }
             }
           })
-          console.log(conflicted)
           if(conflict_group.length>1){
             conflict_list.push(conflict_group);
           }
