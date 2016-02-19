@@ -3,7 +3,6 @@ Handlebars.registerHelper('time', function(context) {
   return d.toLocaleString();
 });
 getEvents = function(email){
-  gapi.client.load('calendar', 'v3', calVerify);
   $.post("getEvents", {"email": email}, function(rawjson){
     jsondata = JSON.parse(rawjson);
     eventdata = jsondata["eventjson"]
@@ -35,8 +34,11 @@ getEvents = function(email){
     }
     $(".btn-success").click(function(){
       event_id = ($(this).parent().parent().attr("id"));
-      console.log(eventdata[event_id])
-      gapi.client.load('calendar', 'v3', addToGCal(event_data));
+      eventobj = eventdata[event_id];
+      console.log(eventobj)
+      gapi.client.load('calendar', 'v3', calVerify(function(calid){
+        return addToGCal(calid, eventobj["start"], eventobj["end"], eventobj["eventName"])
+      }));
     })
     $(".btn-danger").click(function(){
       var event_id = $(this).parent().parent().attr("id");

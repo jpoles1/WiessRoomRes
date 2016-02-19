@@ -1,4 +1,41 @@
-<style type="text/css">
+.container-fluid{
+  height: 110%;
+}
+#leftpane{
+  position: fixed;
+  left: 20px;
+  height: 90%;
+  top: 2%;
+}
+#rightpane{
+  position: fixed;
+  right:0px;
+  height: 80%;
+  top: 8%;
+}
+.taskpane{
+  border: 1px solid black;
+  overflow: scroll;
+  float: left;
+  margin: 25px 1% 50px 1%;
+}
+.fc-toolbar{
+  padding: 15px;
+}
+.fc-today{
+  background-color: #ffeaad !important;
+}
+.event-box{
+  padding-right: 30px;
+  position: relative;
+}
+.event-butt{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 1px;
+}
+//Form stuff below
 .form-style-2{
     max-width: 500px;
     padding: 20px 12px 10px 20px;
@@ -80,4 +117,3 @@
     background: #EA7B00;
     color: #fff;
 }
-</style>

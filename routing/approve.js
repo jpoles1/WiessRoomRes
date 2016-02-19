@@ -25,9 +25,26 @@ module.exports = function(app, Reservation){
       res.send("FAILURE")
     }
   });
+  app.post("/addedEvent", function(req, res){
+    var event_id = req.body.eventid;
+    var email = req.body.email;
+    if(event_id && email){
+      Reservation.update({"_id": event_id}, { $push: { added: email} }, function (err){
+        if(err){
+          res.send(err)
+        }
+        else{
+          res.send("success")
+        }
+      });
+    }
+    else{
+      res.send("FAILURE")
+    }
+  });
   app.post("/getEvents", function(req, res){
     var email = req.body.email;
-    Reservation.find({"rejected": { $ne: email } }, function(err, reslist){
+    Reservation.find({"rejected": { $ne: email }, "added": { $ne: email } }, function(err, reslist){
       conflicted = [];
       no_conflict = [];
       conflict_list = []

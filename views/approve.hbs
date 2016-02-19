@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Wiess Room Reservation System</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="/res/css/main.css"></link>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.min.css"></link>
     <script src="res/js/jquery-2.2.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
@@ -63,39 +64,6 @@
     <script src="res/js/approval.js"></script>
 </head>
 <body style="text-align: center;">
-  <style>
-    #leftpane{
-      height: 90%;
-    }
-    #rightpane{
-      position: fixed;
-      right:0px;
-      height: 80%;
-      top: 8%;
-    }
-    .taskpane{
-      border: 1px solid black;
-      overflow: scroll;
-      float: left;
-      margin: 25px 1% 50px 1%;
-    }
-    .fc-toolbar{
-      padding: 15px;
-    }
-    .fc-today{
-      background-color: #ffeaad !important;
-    }
-    .event-box{
-      padding-right: 30px;
-      position: relative;
-    }
-    .event-butt{
-      display: flex;
-      flex-direction: column;
-      position: absolute;
-      right: 1px;
-    }
-  </style>
   <div id="authorize-div" style="display: none; margin-top: 150px;">
     <span>Authorize access to Google Calendar API</span>
     <!--Button for the user to click to initiate auth sequence -->
@@ -114,12 +82,12 @@
       <h2>Pending Reservations</h2>
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation"><a href="#noconflict" aria-controls="noconflict" role="tab" data-toggle="tab">Ready to Adds</a></li>
-          <li role="presentation" class="active"><a href="#conflict" aria-controls="conflict" role="tab" data-toggle="tab">Conflicted</a></li>
+          <li role="presentation" class="active"><a href="#noconflict" aria-controls="noconflict" role="tab" data-toggle="tab">Ready to Add</a></li>
+          <li role="presentation"><a href="#conflict" aria-controls="conflict" role="tab" data-toggle="tab">Conflicted</a></li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane" id="noconflict">
+          <div role="tabpanel" class="tab-pane active" id="noconflict">
             <br>
             <input type="button" value="Add Non-Conflict Events">
             <br>
@@ -152,7 +120,7 @@
               \{{/each}}
             </script>
           </div>
-          <div role="tabpanel" class="tab-pane active" id="conflict">
+          <div role="tabpanel" class="tab-pane" id="conflict">
             <script id="conflict-template" type="text/x-handlebars-template">
               \{{#each conflict_list}}
                 <div class="conflict-group">
