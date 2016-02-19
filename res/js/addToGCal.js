@@ -41,7 +41,7 @@ function addToGCal(calid, start, end, eventName, email){
       },
     });
     request.execute(function(resp) {
-      console.log("Added event:", resp)
+      console.log("Email:", email)
       if(resp["status"]=="confirmed"){
         $.post("/addedEvent", {"eventid": event_id, "email": email}, function(resp){
           console.log(resp);

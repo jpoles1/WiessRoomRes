@@ -15,11 +15,15 @@ $(function(){
 			right: 'month,agendaWeek,agendaDay'
 		},
     googleCalendarApiKey: "AIzaSyB3QonsQFYrMDQAi8lez34l0IMpOSPBmhg",
-    events: {
+    eventSources: [
+      {
         googleCalendarId: 'ig0tgdisvlpgbjsp9np5g03474@group.calendar.google.com',
-        className: "gcal-event"
-    },
+        className: "gcal-event",
+        color: "#6aa4c1"
+      }
+    ],
     defaultView: "agendaWeek",
+    eventColor: "#cc8400",
 		selectable: true,
 		selectHelper: true,
     editable: true,
@@ -32,7 +36,8 @@ $(function(){
   				eventData = {
   					title: title,
   					start: start,
-  					end: end
+  					end: end,
+            color: "#cc8400",
   				};
           updateTime(eventData)
           console.log(eventData)

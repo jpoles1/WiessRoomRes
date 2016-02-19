@@ -11,6 +11,6 @@ module.exports = function(app, Reservation){
   });
   app.get("/", function(req, res){
     //res.send("Hello!")
-    res.render("home.hbs", {layout: undefined})
+    res.render("reserve.hbs", {layout: undefined})
   })
 }

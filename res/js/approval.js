@@ -24,7 +24,6 @@ function initFullCall(){
 getEvents = function(email){
   $.post("getEvents", {"email": email}, function(rawjson){
     jsondata = JSON.parse(rawjson);
-    console.log(jsondata)
     eventdata = jsondata["eventjson"]
     conflicted = jsondata["conflicted"]
     //Add Conflict Events
@@ -37,7 +36,6 @@ getEvents = function(email){
     $("#noconflict").html(template(jsondata));
     //Add badges to tabs
     $("#noconflict-badge").html(jsondata["no_conflict"].length)
-    console.log(conflicted)
     $("#conflict-badge").html(jsondata["conflicted"].length)
     for(ev_id in eventdata){
       ev = eventdata[ev_id]
@@ -59,16 +57,15 @@ getEvents = function(email){
     $(".btn-success").click(function(){
       event_id = ($(this).parent().parent().attr("id"));
       eventobj = eventdata[event_id];
-      console.log(eventobj)
       gapi.client.load('calendar', 'v3', calVerify(function(calid){
-        return addToGCal(calid, eventobj["start"], eventobj["end"], eventobj["eventName"], eventobj["email"])
+        return addToGCal(calid, eventobj["start"], eventobj["end"], eventobj["eventName"], email)
       }));
     })
     $(".btn-danger").click(function(){
       var event_id = $(this).parent().parent().attr("id");
       $.post("/rejectEvent", {"eventid": event_id, "email": email}, function(resp){
-        console.log(resp);
-        getEvents(email)
+        console.log(email);
+        getEvents(email);
         initFullCall();
       });
     })
