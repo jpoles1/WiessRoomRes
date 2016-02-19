@@ -25,7 +25,7 @@ function calVerify(cb){
     });
   });
 }
-function addToGCal(calid, start, end, eventName){
+function addToGCal(calid, start, end, eventName, email){
   console.log(calid)
   gapi.client.load('calendar', 'v3', function(){
     var request = gapi.client.calendar.events.insert({
@@ -42,11 +42,18 @@ function addToGCal(calid, start, end, eventName){
     });
     request.execute(function(resp) {
       console.log("Added event:", resp)
-      /*$.post("/addedEvent", {"eventid": event_id, "email": email}, function(resp){
-        console.log(resp);
-        //if(resp=="success") window.location.reload();
-        getEvents()
-      });*/
+      if(resp["status"]=="confirmed"){
+        $.post("/addedEvent", {"eventid": event_id, "email": email}, function(resp){
+          console.log(resp);
+          if(resp=="success"){
+            getEvents(email);
+            initFullCall();
+          }
+        });
+      }
+      else{
+        alert("Failed to add event to GCal")
+      }
     });
   });
 }

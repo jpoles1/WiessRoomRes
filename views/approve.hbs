@@ -82,18 +82,45 @@
       <h2>Pending Reservations</h2>
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active"><a href="#noconflict" aria-controls="noconflict" role="tab" data-toggle="tab">Ready to Add</a></li>
-          <li role="presentation"><a href="#conflict" aria-controls="conflict" role="tab" data-toggle="tab">Conflicted</a></li>
+          <li role="presentation" class="active"><a href="#noconflict" aria-controls="noconflict" role="tab" data-toggle="tab">Ready to Add <span id="noconflict-badge" class="badge"></span></a></li>
+          <li role="presentation"><a href="#conflict" aria-controls="conflict" role="tab" data-toggle="tab">Conflicted&#9;<span id="conflict-badge" class="badge"></span></a></li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="noconflict">
-            <br>
-            <input type="button" value="Add Non-Conflict Events">
-            <br>
-            <script id="noconflict-template" type="text/x-handlebars-template">
-              \{{#each no_conflict}}
-                <div class="conflict-group">
+          <div role="tabpanel" class="tab-pane active" id="noconflict"></div>
+          <script id="noconflict-template" type="text/x-handlebars-template">
+            \{{#each no_conflict}}
+              <div class="conflict-group">
+                <div class="event-box" id="\{{_id}}">
+                  <div class="event-butt">
+                    <br>
+                    <button type="button" class="btn btn-success">
+                      <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </button>
+                    <br>
+                    <button type="button" class="btn btn-danger">
+                      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                  <h3>\{{eventName}}</h3>
+                  Reserved by <u><a href="mailto:\{{email}}" target="_blank">\{{reserver}}</a></u> for:
+                  <br>
+                  <i>\{{why}}</i>
+                  <br>
+                  <b>Start:</b> \{{time start}}
+                  <br>
+                  <b>End:</b> \{{time end}}
+                </div>
+                <br>
+              </div>
+              <hr>
+            \{{/each}}
+          </script>
+          <div role="tabpanel" class="tab-pane" id="conflict"></div>
+          <script id="conflict-template" type="text/x-handlebars-template">
+            \{{#each conflict_list}}
+              <div class="conflict-group">
+                \{{#each this}}
                   <div class="event-box" id="\{{_id}}">
                     <div class="event-butt">
                       <br>
@@ -110,48 +137,16 @@
                     <br>
                     <i>\{{why}}</i>
                     <br>
-                    <b>Start:</b> \{{time start}}
+                    <b>Start:</b>\{{start}}
                     <br>
-                    <b>End:</b> \{{time end}}
+                    <b>End:</b>\{{end}}
                   </div>
                   <br>
-                </div>
-                <hr>
-              \{{/each}}
-            </script>
-          </div>
-          <div role="tabpanel" class="tab-pane" id="conflict">
-            <script id="conflict-template" type="text/x-handlebars-template">
-              \{{#each conflict_list}}
-                <div class="conflict-group">
-                  \{{#each this}}
-                    <div class="event-box" id="\{{_id}}">
-                      <div class="event-butt">
-                        <br>
-                        <button type="button" class="btn btn-success">
-                          <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                        </button>
-                        <br>
-                        <button type="button" class="btn btn-danger">
-                          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                      </div>
-                      <h3>\{{eventName}}</h3>
-                      Reserved by <u><a href="mailto:\{{email}}" target="_blank">\{{reserver}}</a></u> for:
-                      <br>
-                      <i>\{{why}}</i>
-                      <br>
-                      <b>Start:</b>\{{start}}
-                      <br>
-                      <b>End:</b>\{{end}}
-                    </div>
-                    <br>
-                  \{{/each}}
-                </div>
-                <hr>
-              \{{/each}}
-            </script>
-          </div>
+                \{{/each}}
+              </div>
+              <hr>
+            \{{/each}}
+          </script>
         </div>
     </div>
   </div>

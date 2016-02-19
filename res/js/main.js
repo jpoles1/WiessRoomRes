@@ -1,20 +1,20 @@
 var updateTime = function(event){
-  console.log(event)
+  console.log(event.start.toISOString())
   $("#eventName").val(event["title"])
-  $("#startTime").val(event.start)
-  $("#endTime").val(event.end)
-
+  $("#startTime").val(event.start.toISOString())
+  $("#endTime").val(event.end.toISOString())
 }
 $(function(){
   var added = 0;
   $('#cal').fullCalendar({
-    timezone: 'America/Chicago',
+    timezone: "America/Chicago",
+    ignoreTimezone: false,
     header: {
 			left: 'prev,next today',
 			center: 'title',
 			right: 'month,agendaWeek,agendaDay'
 		},
-    googleCalendarApiKey: "AIzaSyD3e2q0eBsNFHE0S3S1lT1w-X4K_JCiyS0",
+    googleCalendarApiKey: "AIzaSyB3QonsQFYrMDQAi8lez34l0IMpOSPBmhg",
     events: {
         googleCalendarId: 'ig0tgdisvlpgbjsp9np5g03474@group.calendar.google.com',
         className: "gcal-event"

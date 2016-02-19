@@ -2,9 +2,29 @@ Handlebars.registerHelper('time', function(context) {
   d = new Date(context);
   return d.toLocaleString();
 });
+function initFullCall(){
+  $('#cal').fullCalendar({
+    timezone: 'America/Chicago',
+    ignoreTimezone: false,
+    header: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'month,agendaWeek,agendaDay'
+		},
+    googleCalendarApiKey: "AIzaSyB3QonsQFYrMDQAi8lez34l0IMpOSPBmhg",
+    events: {
+        googleCalendarId: 'ig0tgdisvlpgbjsp9np5g03474@group.calendar.google.com',
+        className: "gcal-event"
+    },
+    defaultView: "agendaWeek",
+		selectable: true,
+    eventLimit: true, // allow "more" link when too many events
+  })
+}
 getEvents = function(email){
   $.post("getEvents", {"email": email}, function(rawjson){
     jsondata = JSON.parse(rawjson);
+    console.log(jsondata)
     eventdata = jsondata["eventjson"]
     conflicted = jsondata["conflicted"]
     //Add Conflict Events
@@ -12,9 +32,13 @@ getEvents = function(email){
     var template = Handlebars.compile(source);
     $("#conflict").html(template(jsondata));
     //Add non-conflicted
-    var source = $("#noconflict-template").html();
-    var template = Handlebars.compile(source);
+    source = $("#noconflict-template").html();
+    template = Handlebars.compile(source);
     $("#noconflict").html(template(jsondata));
+    //Add badges to tabs
+    $("#noconflict-badge").html(jsondata["no_conflict"].length)
+    console.log(conflicted)
+    $("#conflict-badge").html(jsondata["conflicted"].length)
     for(ev_id in eventdata){
       ev = eventdata[ev_id]
       eventOpts = {
@@ -37,35 +61,21 @@ getEvents = function(email){
       eventobj = eventdata[event_id];
       console.log(eventobj)
       gapi.client.load('calendar', 'v3', calVerify(function(calid){
-        return addToGCal(calid, eventobj["start"], eventobj["end"], eventobj["eventName"])
+        return addToGCal(calid, eventobj["start"], eventobj["end"], eventobj["eventName"], eventobj["email"])
       }));
     })
     $(".btn-danger").click(function(){
       var event_id = $(this).parent().parent().attr("id");
       $.post("/rejectEvent", {"eventid": event_id, "email": email}, function(resp){
         console.log(resp);
-        if(resp=="success") window.location.reload();
+        getEvents(email)
+        initFullCall();
       });
     })
   });
 }
 $(function(){
   var added = 0;
-  $('#cal').fullCalendar({
-    timezone: 'America/Chicago',
-    header: {
-			left: 'prev,next today',
-			center: 'title',
-			right: 'month,agendaWeek,agendaDay'
-		},
-    googleCalendarApiKey: "AIzaSyD3e2q0eBsNFHE0S3S1lT1w-X4K_JCiyS0",
-    events: {
-        googleCalendarId: 'ig0tgdisvlpgbjsp9np5g03474@group.calendar.google.com',
-        className: "gcal-event"
-    },
-    defaultView: "agendaWeek",
-		selectable: true,
-    eventLimit: true, // allow "more" link when too many events
-  })
+  initFullCall();
   $("#tablist a").tab("show")
 })

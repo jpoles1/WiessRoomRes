@@ -30,8 +30,8 @@ var Reservation = mongoose.model("Reservation", {
   added: [String]
 })
 //Import routing from other files (under the routing foluder)
-require("./routing/reserve")(app, Reservation)
-require("./routing/approve")(app, Reservation)
+require("./routing/reserve_logic")(app, Reservation)
+require("./routing/approve_logic")(app, Reservation)
 //Set the port for the server
 port = process.env.PORT || 8000;
 //Tell server to start listening on above port

@@ -78,7 +78,7 @@ module.exports = function(app, Reservation){
         "eventjson": eventlist,
         "no_conflict": no_conflict,
         "conflict_list": conflict_list,
-        "conflicted": JSON.stringify(conflicted)
+        "conflicted": conflicted
       }))
     })
   })
