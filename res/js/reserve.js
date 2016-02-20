@@ -14,10 +14,10 @@ $(function(){
 			center: 'title',
 			right: 'month,agendaWeek,agendaDay'
 		},
-    googleCalendarApiKey: "AIzaSyB3QonsQFYrMDQAi8lez34l0IMpOSPBmhg",
+    googleCalendarApiKey: "AIzaSyD2ZI4IAjejeNnOUEKJIaAoEo5tyGuV1uc",
     eventSources: [
       {
-        googleCalendarId: 'ig0tgdisvlpgbjsp9np5g03474@group.calendar.google.com',
+        googleCalendarId: 'vtm3ngrte97bfumjc48pc2n1n0@group.calendar.google.com',
         className: "gcal-event",
         color: "#6aa4c1"
       }
