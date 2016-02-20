@@ -46,8 +46,9 @@ function addToGCal(calid, start, end, eventName, email){
         $.post("/addedEvent", {"eventid": event_id, "email": email}, function(resp){
           console.log(resp);
           if(resp=="success"){
-            getEvents(email);
-            initFullCall();
+            window.location.reload();
+            //getEvents(email);
+            //initFullCall();
           }
         });
       }

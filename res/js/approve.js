@@ -65,8 +65,9 @@ getEvents = function(email){
       var event_id = $(this).parent().parent().attr("id");
       $.post("/rejectEvent", {"eventid": event_id, "email": email}, function(resp){
         console.log(email);
-        getEvents(email);
-        initFullCall();
+        window.location.reload();
+        //getEvents(email);
+        //initFullCall();
       });
     })
   });

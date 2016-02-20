@@ -83,6 +83,6 @@ module.exports = function(app, Reservation){
     })
   })
   app.get("/approve", function(req, res){
-    res.render("approve.hbs", {layout: undefined})
+    res.render("approve.hbs", {layout: undefined, "OAuthAPIKEY": "1079920800108-smb06uetbjh9vosevmflrva9crohot6g.apps.googleusercontent.com"})
   })
 }
