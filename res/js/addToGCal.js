@@ -27,6 +27,9 @@ function calVerify(cb){
 }
 function addToGCal(calid, start, end, eventName, email){
   console.log(calid)
+  start = moment(start).add(6, "hours").format()
+  end = moment(end).add(6, "hours").format()
+  console.log(start,end)
   gapi.client.load('calendar', 'v3', function(){
     var request = gapi.client.calendar.events.insert({
       'calendarId': calid,
