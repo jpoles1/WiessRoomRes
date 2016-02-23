@@ -24,7 +24,6 @@ function initFullCall(){
 getEvents = function(email){
   $.post("getEvents", {"email": email}, function(rawjson){
     jsondata = JSON.parse(rawjson);
-    console.log(jsondata);
     eventdata = jsondata["eventjson"]
     conflicted = jsondata["conflicted"]
     //Add Conflict Events
@@ -65,7 +64,6 @@ getEvents = function(email){
     $(".btn-danger").click(function(){
       var event_id = $(this).parent().parent().attr("id");
       $.post("/rejectEvent", {"eventid": event_id, "email": email}, function(resp){
-        console.log(email);
         getEvents(email);
         initFullCall();
       });
