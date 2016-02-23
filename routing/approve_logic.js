@@ -55,7 +55,7 @@ module.exports = function(app, Reservation){
           reslist.slice(res_index+1).forEach(function(elem, check_index){
             check_index+=1;
             function isConflict(element, index, array) {
-              return (element["start"]-elem["end"]<=0) && (elem["start"]-element["end"]<=0)
+              return (element["start"]-elem["end"]<=0) && (elem["start"]-element["end"]<=0) && (elem["room"] == element["room"])
             }
             if(conflict_group.some(isConflict) && conflicted.indexOf(check_index)==-1){
               conflicted.push(elem["_id"])
