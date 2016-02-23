@@ -48,7 +48,7 @@
           gapi.client.plus.people.get({userId: 'me'}).execute(function(resp) {
             // Shows profile information
             email = resp["emails"][0]["value"];
-            getEvents(email);
+            getEvents(email)
           })
         });
       }
@@ -122,26 +122,28 @@
             \{{#each conflict_list}}
               <div class="conflict-group">
                 \{{#each this}}
-                  <div class="event-box" id="\{{_id}}">
-                    <div class="event-butt">
-                      <br>
-                      <button type="button" class="btn btn-success">
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                      </button>
-                      <br>
-                      <button type="button" class="btn btn-danger">
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                      </button>
-                    </div>
-                    <h3>\{{eventName}}</h3>
-                    <h4>\{{room}}</h4>
+                  <div class="event-box" id="\{{res._id}}">
+                    \{{#if editable}}
+                      <div class="event-butt">
+                        <br>
+                        <button type="button" class="btn btn-success">
+                          <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </button>
+                        <br>
+                        <button type="button" class="btn btn-danger">
+                          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </button>
+                      </div>
+                    \{{/if}}
+                    <h3>\{{res.eventName}}</h3>
+                    <h4>\{{res.room}}</h4>
                     Reserved by <u><a href="mailto:\{{email}}" target="_blank">\{{reserver}}</a></u> for:
                     <br>
-                    <i>\{{why}}</i>
+                    <i>\{{res.why}}</i>
                     <br>
-                    <b>Start:</b>\{{start}}
+                    <b>Start:</b>\{{res.start}}
                     <br>
-                    <b>End:</b>\{{end}}
+                    <b>End:</b>\{{res.end}}
                   </div>
                   <br>
                 \{{/each}}
