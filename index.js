@@ -15,6 +15,27 @@ app.use('/res', express.static('res'));
 require('dotenv').config();
 //Load Mongoose (mongodb driver)
 var mongoose = require('mongoose');
+//Load email client
+var nodemailer = require('nodemailer');
+var sendEmail = function (recipient, subject, message, cb){
+  var login = 'smtps://'+process.env.GMAIL_UNAME+'%40gmail.com:'+process.env.GMAIL_PASS+'@smtp.gmail.com'
+  var transporter = nodemailer.createTransport(login);
+  var mailOptions = {
+    "from": '"Wiess Room Reservations" <'+process.env.GMAIL_UNAME+'@gmail.com>', // sender address
+    "to": res_obj["email"], // list of receivers
+    "subject": subject, // Subject line
+    "html":  message// html body
+  };
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+      return console.log(error);
+    }
+    console.log('Message sent: ' + info.response);
+    cb();
+  });
+}
 //Connect to server using URI from .env file
 mongoose.connect(process.env.MONGOLAB_URI);
 //Setup structure for Reservation
@@ -31,8 +52,8 @@ var Reservation = mongoose.model("Reservation", {
   added: [String]
 })
 //Import routing from other files (under the routing foluder)
-require("./routing/reserve_logic")(app, Reservation)
-require("./routing/approve_logic")(app, Reservation)
+require("./routing/reserve_logic")(app, Reservation, sendEmail)
+require("./routing/approve_logic")(app, Reservation, sendEmail)
 //Set the port for the server
 port = process.env.PORT || 8000;
 //Tell server to start listening on above port
