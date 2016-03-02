@@ -55,9 +55,15 @@ module.exports = function(app, Reservation, sendEmail){
         var confirmation_link = 'http://127.0.0.1:8000/confirmres?code='+result._id;
         email_msg += '<a href="'+confirmation_link+'">'+confirmation_link+'</a>';
         x = function(res){
-          return function(){
+          return function(err){
+            if(err){
+              msg = err
+            }
+            else{
+              msg = "Reservation submitted. <span>Please check your email for the confirmation link</span> to finalize your reservation.</div><script>setTimeout(function(){location.replace('/');}, 3*1000)</script>"
+            }
             res.render("notice.hbs", {
-              msg: "Reservation submitted. <span>Please check your email for the confirmation link</span> to finalize your reservation.</div><script>setTimeout(function(){location.replace('/');}, 3*1000)</script>"
+              "msg": msg
             });
           }
         }(res)

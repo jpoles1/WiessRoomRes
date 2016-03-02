@@ -30,10 +30,13 @@ var sendEmail = function (recipient, subject, message, cb){
   // send mail with defined transport object
   transporter.sendMail(mailOptions, function(error, info){
     if(error){
+      cb(err)
       return console.log(error);
     }
-    console.log('Message sent: ' + info.response);
-    cb();
+    else{
+      console.log('Message sent: ' + info.response);
+      cb(undefined);
+    }
   });
 }
 //Connect to server using URI from .env file

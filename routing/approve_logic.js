@@ -12,21 +12,22 @@ module.exports = function(app, Reservation, sendEmail){
     var event_id = req.body.eventid;
     var email = req.body.email;
     if(event_id && email){
-      Reservation.findByIdAndUpdate(event_id, { $push: { rejected: "email"}}, function (err, doc){
+      Reservation.findByIdAndUpdate(event_id, { $push: { rejected: email}}, function (err, doc){
         if(err){
           res.send(err)
         }
         else{
           res_obj = doc._doc;
           x = function(res){
-            return function(){
+            return function(err){
               res.send("success")
             }
           }(res)
-          var subject = "REJECTED: "+res_obj["room"]+' Reservation"'
+          var subject = "REJECTED: "+res_obj["room"]+' Reservation'
           var email_msg = "Hello "+res_obj["reserver"]
+          var start = new Date(res_obj["start"])
           email_msg += ",<br>I regret to inform you that the following Wiess Room Reservation Request has been rejected:"
-          email_msg += "<ul><li>Room: "+res_obj["room"]+"</li><li>Event Name: "+res_obj["eventName"]+"</li><li>Start Time: "+res_obj["start"]+"</li><li>End Time: "+res_obj["end"]+"</li></ul>"
+          email_msg += "<ul><li>Room: "+res_obj["room"]+"</li><li>Event Name: "+res_obj["eventName"]+"</li><li>Why?: "+res_obj["why"]+"</li><li>Date: "+start.toDateString()+"</ul>"
           email_msg += "You can send an email to <a href='mailto:wiessrooms@gmail.com'>wiessrooms@gmail.com</a> if you wish to discuss your rejection.<br>--<br>Thanks,<br>Wiess Room Res Team"
           sendEmail(res_obj["email"], subject, email_msg, x)
         }
@@ -47,14 +48,15 @@ module.exports = function(app, Reservation, sendEmail){
         else{
           res_obj = doc._doc;
           x = function(res){
-            return function(){
+            return function(err){
               res.send("success")
             }
           }(res)
-          var subject = "Approved: "+res_obj["room"]+' Reservation"'
+          var subject = "Approved: "+res_obj["room"]+' Reservation'
           var email_msg = "Hello "+res_obj["reserver"]
+          var start = new Date(res_obj["start"])
           email_msg += ",<br>I'm glad to inform you that the following Wiess Room Reservation Request has been approved:"
-          email_msg += "<ul><li>Room: "+res_obj["room"]+"</li><li>Event Name: "+res_obj["eventName"]+"</li><li>Start Time: "+res_obj["start"]+"</li><li>End Time: "+res_obj["end"]+"</li></ul>"
+          email_msg += "<ul><li>Room: "+res_obj["room"]+"</li><li>Event Name: "+res_obj["eventName"]+"</li><li>Why?: "+res_obj["why"]+"</li><li>Date: "+start.toDateString()+"</ul>"
           email_msg += "You can send an email to <a href='mailto:wiessrooms@gmail.com'>wiessrooms@gmail.com</a> if you need any further assistance.<br>--<br>Thanks,<br>Wiess Room Res Team"
           sendEmail(res_obj["email"], subject, email_msg, x)
         }
@@ -99,7 +101,6 @@ module.exports = function(app, Reservation, sendEmail){
         }
         if(not_added){eventlist[res["_id"]] = res;}
       });
-      console.log(conflict_list)
       res.json(JSON.stringify({
         "eventjson": eventlist,
         "no_conflict": no_conflict,
