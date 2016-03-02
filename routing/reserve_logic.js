@@ -4,7 +4,7 @@ module.exports = function(app, Reservation){
     two_words_patt = new RegExp(/^([a-zA-Z]){1,64} ([a-zA-Z]){1,64}$/);
     why_patt = new RegExp(/\w{3,100}[ !.?,]?/);
     email_patt = new RegExp(/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@rice\.edu$/);
-    empty_event = "Add event using calendar"
+    empty_event = ""
     if(!two_words_patt.test(res_obj["reserver"])){
       validRes = "Please enter a valid full name. \"First Last\" or \"Last First\"."
     }
@@ -35,7 +35,7 @@ module.exports = function(app, Reservation){
     }
     check = checkReservation(res_obj);
     if(check != 1){
-      res.send("<div style='margin-top: 140px; font-size: 42pt; text-align: center;'>"+check+"<br><br>Returning you to the last page.</div><script>setTimeout(function(){window.history.back();}, 2*1000)</script>");
+      res.send("<div style='margin-top: 140px; font-size: 42pt; text-align: center;'>"+check+"<br><br>Returning you to the last page.</div><script>setTimeout(function(){window.history.back();}, 3*1000)</script>");
     }
     else{
       var newres = new Reservation(res_obj);
@@ -43,7 +43,7 @@ module.exports = function(app, Reservation){
         if (err) console.log(err)
         console.log('Adding a new entry right meow');
       });
-      res.send("<div style='margin-top: 140px; font-size: 42pt; text-align: center;'>Reservation submitted. Please check your email inbox for the confirmation link to finalize your reservation.</div><script>setTimeout(function(){location.replace('/');}, 2*1000)</script>")
+      res.send("<div style='margin-top: 140px; font-size: 42pt; text-align: center;'>Reservation submitted. Please check your email inbox for the confirmation link to finalize your reservation.</div><script>setTimeout(function(){location.replace('/');}, 3*1000)</script>")
     }
   });
   app.get("/", function(req, res){
