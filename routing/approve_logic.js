@@ -44,7 +44,7 @@ module.exports = function(app, Reservation){
   });
   app.post("/getEvents", function(req, res){
     var email = req.body.email;
-    Reservation.find({"rejected": { $ne: email }/*, "added": { $ne: email }*/}, function(err, reslist){
+    Reservation.find({"confirmed": true, "rejected": { $ne: email }/*, "added": { $ne: email }*/}, function(err, reslist){
       conflicted = [];
       no_conflict = [];
       conflict_list = []

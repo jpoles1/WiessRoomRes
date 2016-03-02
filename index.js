@@ -26,6 +26,7 @@ var Reservation = mongoose.model("Reservation", {
   eventName: String,
   start: Date,
   end: Date,
+  confirmed: Boolean,
   rejected: [String],
   added: [String]
 })
