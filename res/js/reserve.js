@@ -54,5 +54,4 @@ $(function(){
       updateTime(event);
     },
   })
-  console.log("TEST")
 })
